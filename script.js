@@ -33,16 +33,38 @@ Object.keys(ENGLISH_TO_MORSE).forEach(key => {
     MORSE_TO_ENGLISH[ENGLISH_TO_MORSE[key]]=key
 });
 
+if (typeof document !== "undefined") {
+const translateBtn = document.getElementById("translateBtn");
+const inputBox = document.getElementById("inputBox");
+const outputBox = document.getElementById("outputBox");
 
+translateBtn.addEventListener("click", () => {
+  let inputText = inputBox.value; 
+  
+  if (inputText.trim() === "") {
+    outputBox.value = "Please enter text";
+    return;
+  }
+  
+  let language = detectInput(inputText);
 
+  if (language === "Morse") {
+    outputBox.value = MorseToEnglish(inputText);
+  } else if (language === "English") {
+    outputBox.value = EnglishToMorse(inputText);
+  }
+});
+}
+const detectInput = (input) => {
+  
+  if (!input.trim()) return "English";
+  return /^[.\-\/\s]+$/.test(input) ? "Morse" : "English";
+};
 
+const EnglishToMorse=(englishText) =>{
+let englishTextUppercase = englishText.toUpperCase();
+let englishList = englishTextUppercase.trim().split(/\s+/).join(" ").split("");
 
-
-function EnglishToMorse(englishText) {
-let englishText_uppercase = englishText.toUpperCase();
-let englishList = englishText_uppercase.trim().split(/\s+/).join(" ").split("");
-//
-console.log(englishList)
 let output=englishList.map((char) => {
  if(char === " ") {
     return " ";
@@ -64,13 +86,13 @@ let finalOutput=filterOutput.map((char) => {
 return finalOutput.join(" ");
 }
 
-function MorseToEnglish(morseText) {
+const MorseToEnglish=(morseText)=> {
 let morselist=morseText.split(" / ");
 console.log(morselist)
 
 let output= morselist.map((mcode)=>{
   let singleChar=mcode.split(" ");
-   //console.log(singleChar)//[ '....', '..' ]
+   
   let singleWord=singleChar.map((c)=>{
     if(MORSE_TO_ENGLISH[c]){ return MORSE_TO_ENGLISH[c]
 
@@ -79,29 +101,16 @@ let output= morselist.map((mcode)=>{
     }
    
   })
-
-
  return singleWord.join("");
 })
 
 let filteredOutput = output.filter(word => word !== "");
 return filteredOutput.join(" ");
-
-
-// let outputText= output.join(" ");
-
-// return outputText;
-
 }
 
-
-// console.log(MorseToEnglish(" / ....../ .... .."))
-//console.log(EnglishToMorse(""))
-const isMorse = /^[.\-\/\s]+$/.test("....");
-console.log(isMorse)
 
 
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { EnglishToMorse, MorseToEnglish, ENGLISH_TO_MORSE, MORSE_TO_ENGLISH };
+  module.exports = { EnglishToMorse, MorseToEnglish, detectInput, ENGLISH_TO_MORSE, MORSE_TO_ENGLISH };
 }

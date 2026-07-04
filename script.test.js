@@ -1,4 +1,36 @@
-const { EnglishToMorse, MorseToEnglish } = require("./script");
+const { EnglishToMorse, MorseToEnglish, detectInput } = require("./script");
+
+
+describe("detectInput function", () => {
+  
+  test("should detect pure English text as 'English'", () => {
+    expect(detectInput("HELLO")).toBe("English");
+    expect(detectInput("hello world")).toBe("English");
+  });
+
+  test("should detect pure Morse code as 'Morse'", () => {
+    expect(detectInput(".... . .-.. .-.. ---")).toBe("Morse");
+    expect(detectInput(".... . .-.. .-.. --- / .-- --- .-. .-.. -..")).toBe("Morse");
+  });
+
+  test("should default empty or whitespace inputs to 'English'", () => {
+    expect(detectInput("")).toBe("English");
+    expect(detectInput("   ")).toBe("English");
+  });
+
+  test("should detect mixed text (English + Morse symbols) as 'English'", () => {
+    expect(detectInput("SOS .... . .-.. .-.. ---")).toBe("English");
+    expect(detectInput("Hello -...")).toBe("English");
+  });
+
+  test("should detect numbers and special characters as 'English'", () => {
+    expect(detectInput("12345")).toBe("English");
+    expect(detectInput("Hello!")).toBe("English");
+  });
+  
+});
+
+
 
 describe("EnglishToMorse",()=>{
 test("translate a single word", ()=>{
