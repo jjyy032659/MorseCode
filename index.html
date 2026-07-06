@@ -1,39 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>morse-code translator</title>
-     <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
     <div class="panel">
-
-       <div class="panel__header">
+      <div class="panel__header">
         <h1 class="panel__title">Telegraph Translator</h1>
-        <p   class="panel__subtitle">English ⇄ Morse Code</p>
-        </div>
-     
-
+        <p class="panel__subtitle">English ⇄ Morse Code</p>
+      </div>
 
       <div class="field">
         <label class="field__label" for="inputBox">Message</label>
-            <textarea id="inputBox" placeholder="Type English or Morse code..."></textarea>
-       </div>
-   
-       <button id="translateBtn">Send Transmission</button>
+        <textarea
+          id="inputBox"
+          placeholder="Type English or Morse code..."
+        ></textarea>
+      </div>
 
+      <button id="translateBtn">Send Transmission</button>
 
- <div class="field" style="margin-top: 18px;">
-            <label class="field__label" for="outputBox">Received</label>
-            <div class="output-wrap">
-                <textarea id="outputBox" readonly></textarea>
-            </div>
+      <div class="field" style="margin-top: 18px">
+        <label class="field__label" for="outputBox">Received</label>
+        <div class="output-wrap">
+          <textarea id="outputBox" readonly></textarea>
         </div>
-
+      </div>
     </div>
-   
 
     <script src="./script.js"></script>
-</body>
+  </body>
 </html>

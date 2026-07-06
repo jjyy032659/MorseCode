@@ -27,90 +27,94 @@ const ENGLISH_TO_MORSE = {
   Z: "--..",
 };
 
-const MORSE_TO_ENGLISH ={};
+const MORSE_TO_ENGLISH = {};
 
-Object.keys(ENGLISH_TO_MORSE).forEach(key => {
-    MORSE_TO_ENGLISH[ENGLISH_TO_MORSE[key]]=key
+Object.keys(ENGLISH_TO_MORSE).forEach((key) => {
+  MORSE_TO_ENGLISH[ENGLISH_TO_MORSE[key]] = key;
 });
 
 if (typeof document !== "undefined") {
-const translateBtn = document.getElementById("translateBtn");
-const inputBox = document.getElementById("inputBox");
-const outputBox = document.getElementById("outputBox");
+  const translateBtn = document.getElementById("translateBtn");
+  const inputBox = document.getElementById("inputBox");
+  const outputBox = document.getElementById("outputBox");
 
-translateBtn.addEventListener("click", () => {
-  let inputText = inputBox.value; 
-  
-  if (inputText.trim() === "") {
-    outputBox.value = "Please enter text";
-    return;
-  }
-  
-  let language = detectInput(inputText);
+  translateBtn.addEventListener("click", () => {
+    let inputText = inputBox.value;
 
-  if (language === "Morse") {
-    outputBox.value = MorseToEnglish(inputText);
-  } else if (language === "English") {
-    outputBox.value = EnglishToMorse(inputText);
-  }
-});
+    if (inputText.trim() === "") {
+      outputBox.value = "Please enter text";
+      return;
+    }
+
+    let language = detectInput(inputText);
+
+    if (language === "Morse") {
+      outputBox.value = MorseToEnglish(inputText);
+    } else if (language === "English") {
+      outputBox.value = EnglishToMorse(inputText);
+    }
+  });
 }
 const detectInput = (input) => {
-  
   if (!input.trim()) return "English";
   return /^[.\-\/\s]+$/.test(input) ? "Morse" : "English";
 };
 
-const EnglishToMorse=(englishText) =>{
-let englishTextUppercase = englishText.toUpperCase();
-let englishList = englishTextUppercase.trim().split(/\s+/).join(" ").split("");
+const EnglishToMorse = (englishText) => {
+  let englishTextUppercase = englishText.toUpperCase();
+  let englishList = englishTextUppercase
+    .trim()
+    .split(/\s+/)
+    .join(" ")
+    .split("");
 
-let output=englishList.map((char) => {
- if(char === " ") {
-    return " ";
-  }else if(ENGLISH_TO_MORSE[char]) {
-    return ENGLISH_TO_MORSE[char];
-  }else{
-    return "";
-  }
-})
+  let output = englishList.map((char) => {
+    if (char === " ") {
+      return " ";
+    } else if (ENGLISH_TO_MORSE[char]) {
+      return ENGLISH_TO_MORSE[char];
+    } else {
+      return "";
+    }
+  });
 
-let filterOutput=output.filter(char => char !== "")
+  let filterOutput = output.filter((char) => char !== "");
 
-let finalOutput=filterOutput.map((char) => {
-    if(char===" "){
-        return "/";
+  let finalOutput = filterOutput.map((char) => {
+    if (char === " ") {
+      return "/";
     }
     return char;
-});
-return finalOutput.join(" ");
-}
+  });
+  return finalOutput.join(" ");
+};
 
-const MorseToEnglish=(morseText)=> {
-let morselist=morseText.split(" / ");
-console.log(morselist)
+const MorseToEnglish = (morseText) => {
+  let morselist = morseText.split(" / ");
 
-let output= morselist.map((mcode)=>{
-  let singleChar=mcode.split(" ");
-   
-  let singleWord=singleChar.map((c)=>{
-    if(MORSE_TO_ENGLISH[c]){ return MORSE_TO_ENGLISH[c]
+  let output = morselist.map((mcode) => {
+    let singleChar = mcode.split(" ");
 
-    }else{
-      return ""
-    }
-   
-  })
- return singleWord.join("");
-})
+    let singleWord = singleChar.map((c) => {
+      if (MORSE_TO_ENGLISH[c]) {
+        return MORSE_TO_ENGLISH[c];
+      } else {
+        return "";
+      }
+    });
+    return singleWord.join("");
+  });
 
-let filteredOutput = output.filter(word => word !== "");
-return filteredOutput.join(" ");
-}
-
-
-
+  let filteredOutput = output.filter((word) => word !== "");
+  return filteredOutput.join(" ");
+};
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { EnglishToMorse, MorseToEnglish, detectInput, ENGLISH_TO_MORSE, MORSE_TO_ENGLISH };
+  module.exports = {
+    EnglishToMorse,
+    MorseToEnglish,
+    detectInput,
+    ENGLISH_TO_MORSE,
+    MORSE_TO_ENGLISH,
+  };
 }
