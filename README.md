@@ -2,6 +2,8 @@
 
 A simple web app that translates between English and Morse code. Just type in either one, hit the button, and it auto-detects which language you typed and translates it to the other.
 
+live link: https://jjyy032659.github.io/MorseCode/
+
 ## Features
 
 - English to Morse code, and Morse code to English
